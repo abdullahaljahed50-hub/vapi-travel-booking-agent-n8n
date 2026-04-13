@@ -1,0 +1,413 @@
+{
+  "name": "Travel booking agent, powered by VAPI.",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fd4b280a-36df-4143-84b9-3f9583839a47",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1376,
+        -752
+      ],
+      "id": "37f3e58e-3904-4985-8744-9c25aac2f52b",
+      "name": "Webhook",
+      "webhookId": "fd4b280a-36df-4143-84b9-3f9583839a47"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ccb6b3fe-5db9-4d83-97b7-96ddb10a22e6",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "2bbbed05-d22b-465d-a52a-ba5c0ccba380",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a5c0cc75-e8b9-4307-891a-bb17c45fcc2f",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "3163eb29-b4d5-4e79-89d0-7de5957c631f",
+              "name": "",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "481dd342-2181-41c4-b28b-dc29d83f9536",
+              "name": "origin",
+              "value": "={{ $json.body.message.artifact.messages[4].metadata.wordLevelConfidence[2].punctuated_word }}{{ $json.body.message.artifact.messages[4].metadata.wordLevelConfidence[3].word }}",
+              "type": "string"
+            },
+            {
+              "id": "38a4c2ec-6e6b-4eb4-bbc6-83d7654913d4",
+              "name": "destination",
+              "value": "={{ $json.body.message.artifact.messages[6].metadata.wordLevelConfidence[5].word }}",
+              "type": "string"
+            },
+            {
+              "id": "34bff9fa-9d1e-414b-a28f-f768f9477726",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1152,
+        -752
+      ],
+      "id": "ad66e8f0-a7b1-4aae-a08e-ff6e63072008",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -928,
+        -752
+      ],
+      "id": "266e2ea6-7b49-411d-90d0-119ea2e90353",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -400
+      ],
+      "id": "17b96d4b-9e3b-4aa0-a612-1173f4b258cf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3440ZhQFSqPzDLMZ",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search?key=0added5e34319b99d9ebb8d919fd937c9ae06d893694cf4ff68eb199ed23a1ba",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {},
+            {},
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -352,
+        -752
+      ],
+      "id": "a5b4a2b8-e1f5-4390-8a1c-7db74a712c96",
+      "name": "Resort",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4BAEF9QT55ujuRgd",
+          "name": "Header Auth account"
+        },
+        "httpQueryAuth": {
+          "id": "67eo8i1qRG0L4FHn",
+          "name": "Query Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -576,
+        -752
+      ],
+      "id": "a9e92c54-f2a7-4f37-a331-c897db26b72a",
+      "name": "Activities",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4BAEF9QT55ujuRgd",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search?key=0added5e34319b99d9ebb8d919fd937c9ae06d893694cf4ff68eb199ed23a1ba",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        96,
+        -752
+      ],
+      "id": "d5f556f0-47f2-4e75-bd9a-61c800628c3c",
+      "name": "Flights",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4BAEF9QT55ujuRgd",
+          "name": "Header Auth account"
+        },
+        "httpQueryAuth": {
+          "id": "mJcSJlqGiCaiG0yn",
+          "name": "Query Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        -752
+      ],
+      "id": "7add7341-b9ed-4934-a4a1-643ba42f7f3e",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        320,
+        -752
+      ],
+      "id": "379521f0-3fea-46ea-bef5-7bca10d4b298",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -864,
+        -480
+      ],
+      "id": "9489ac47-31cf-4317-bb25-beba66e35a83",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        -528
+      ],
+      "id": "4a25f823-72d7-40e7-be44-3cb61dea16e7",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "sendTo": "officialacc213@gmail.com",
+        "subject": "hh",
+        "message": "vv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -752
+      ],
+      "id": "09bac8be-a8ac-4d56-911a-060e9816de6e",
+      "name": "Send booking data to user",
+      "webhookId": "3b69dd88-465a-44db-acef-f74fd8c0fc7c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mppIthAAuFzR6OuU",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Activities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activities": {
+      "main": [
+        [
+          {
+            "node": "Resort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resort": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Flights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Flights": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send booking data to user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9572ce94-a030-429a-b919-d936f4abf9a4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ff0006fc908e706f73518b4e3db17d97601bf31f154a300d9a76d84e35a24bac"
+  },
+  "id": "hpyR5faH2YWE1M4u",
+  "tags": []
+}
